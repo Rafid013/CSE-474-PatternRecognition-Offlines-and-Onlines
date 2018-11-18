@@ -12,7 +12,7 @@ class Perceptron:
         self.weight = []
         for i in range(0, dataframe.shape[1]):
             self.weight.append(0)
-        self.p = 1
+        self.p = 0.5
         self.dataframe = dataframe
         self.class1 = class1
         self.class2 = class2

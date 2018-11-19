@@ -51,7 +51,7 @@ class Perceptron:
                 temp_vect = scaler_mul(x, delta_x*self.p)
                 w = w.sub(temp_vect)
             t += 1
-            if len(y) == 0 or t == 100:
+            if len(y) == 0 or t == 20:
                 break
         self.weight = ws.tolist()
 
@@ -59,7 +59,7 @@ class Perceptron:
         w = pd.Series(self.weight)
         x = x.append(pd.Series([1], index=[self.dataframe.shape[1] - 1]))
         temp = w.dot(x)
-        if temp > 0:
+        if temp >= 0:
             return self.class1
         else:
             return self.class2

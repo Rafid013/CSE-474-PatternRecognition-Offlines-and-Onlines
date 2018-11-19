@@ -104,7 +104,7 @@ class Perceptron:
         return self.class_values[class_idx]
 
 
-df_ = pd.read_csv('Train.csv', delimiter=',', header=None)
+df_ = pd.read_csv('Train.txt', delimiter='\s+', header=None, skiprows=1)
 
 df_ = df_.iloc[1:, :]
 df_ = df_.reset_index(drop=True)
@@ -114,7 +114,7 @@ p = Perceptron(df_)
 p.train()
 
 
-df_test = pd.read_csv('Test.csv', delimiter=',', header=None)
+df_test = pd.read_csv('Test.txt', delimiter='\s+', header=None)
 df_test = df_test.iloc[1:, :]
 df_test = df_test.reset_index(drop=True)
 for l in range(0, df_test.shape[1]):

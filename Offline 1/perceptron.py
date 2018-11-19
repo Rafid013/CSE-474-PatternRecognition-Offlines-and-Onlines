@@ -44,7 +44,7 @@ class Perceptron:
                 temp_vect = scaler_mul(x, delta_x*self.p)
                 w = w.sub(temp_vect)
             t += 1
-            if len(y) == 0 or t == 100:
+            if len(y) == 0 or t == 40:
                 break
         self.weight = w.tolist()
 

@@ -45,7 +45,7 @@ class ChannelEqualizer:
 
     @staticmethod
     def multivariate_normal(x, means, covariance_mat):
-        d = x.shape[1]
+        d = len(x)
         temp1 = math.sqrt(math.pow(2 * math.pi, d) * math.fabs(np.linalg.det(covariance_mat)))
         temp2 = np.matrix(x) - np.matrix(means)
         temp3 = -0.5 * temp2 * np.linalg.inv(covariance_mat) * temp2.transpose()
@@ -65,13 +65,19 @@ class ChannelEqualizer:
                                                                                    self.clusters_covariances[w_after])
             return math.log(d, math.e)
 
-    def D_max(self, wik, x, k, from_list):
+    def D_max(self, wik, x, k, from_list, D):
         if k == 1:
             return self.distance_proba(x[k], wik, -1)
-        max_value = self.D_max(0, x, k - 1, from_list) + self.distance_proba(x[k], wik, 0)
+        if D[0][k - 1] == -1:
+            max_value = self.D_max(0, x, k - 1, from_list, D) + self.distance_proba(x[k], wik, 0)
+        else:
+            max_value = D[0][k - 1] + self.distance_proba(x[k], wik, 0)
         max_from = 0
         for wik_1 in range(1, self.num_of_clusters):
-            value = self.D_max(wik_1, x, k - 1, from_list) + self.distance_proba(x[k], wik, wik_1)
+            if D[wik_1][k - 1] == -1:
+                value = self.D_max(0, x, k - 1, from_list, D) + self.distance_proba(x[k], wik, 0)
+            else:
+                value = D[wik_1][k - 1] + self.distance_proba(x[k], wik, 0)
             if value > max_value:
                 max_value = value
                 max_from = wik_1
@@ -136,19 +142,23 @@ class ChannelEqualizer:
         y = len(I)*[0]
         X = [0]
 
+        D = [[-1 for _ in range(len(x))] for _ in range(self.num_of_clusters)]
         from_list = [[-1 for _ in range(len(x))] for _ in range(self.num_of_clusters)]
 
         for k in range(1, len(I)):
             x[k] = coefficients[0]*I[k] + coefficients[1]*I[k - 1] + noise_list[k]
             X.append([x[k], x[k - 1]])
 
-        D_max = self.D_max(0, X, len(X) - 1, from_list)
+            for i in range(self.num_of_clusters):
+                print(k, i)
+                D[i][k] = self.D_max(i, X, k, from_list, D)
+
+        D_max = D[0][len(I) - 1]
         cluster_max = 0
         for i in range(1, self.num_of_clusters):
-            print(i)
-            D = self.D_max(i, X, len(X) - 1, from_list)
-            if D > D_max:
-                D_max = D
+            D_val = D[i][len(I) - 1]
+            if D_val > D_max:
+                D_max = D_val
                 cluster_max = i
 
         for k in range(len(I) - 1, 0):

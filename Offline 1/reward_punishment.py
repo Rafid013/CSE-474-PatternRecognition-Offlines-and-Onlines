@@ -25,7 +25,7 @@ class Perceptron:
         t = 0
         while True:
             y = 0
-            print t
+            print(t)
             for i in range(0, num_of_samples):
                 xi = df.iloc[i, :num_of_feature]
                 xi = xi.append(pd.Series([1], index=[num_of_feature]))

@@ -1,7 +1,7 @@
 import pandas as pd
 import perceptron
-import reward_punishment
-import pocket
+# import reward_punishment
+# import pocket
 
 df = pd.read_csv('Train2.csv', delimiter=',', header=None)
 # df = df.iloc[1:, :]
@@ -43,10 +43,9 @@ for i in range(0, df.shape[0]):
         else:
             fp += 1
 
-print tp, tn, fp, fn
+print(tp, tn, fp, fn)
 acc = float(tp + tn)/df.shape[0]
-print acc
-
+print(acc)
 
 df_test = pd.read_csv('Test2.csv', delimiter=',', header=None)
 # df_test = df_test.iloc[1:, :]
@@ -79,6 +78,6 @@ for i in range(0, df_test.shape[0]):
         else:
             fp += 1
 
-print tp, tn, fp, fn
+print(tp, tn, fp, fn)
 acc = float(tp + tn)/df_test.shape[0]
-print acc
+print(acc)

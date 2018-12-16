@@ -26,7 +26,7 @@ class Perceptron:
         hs = 0
         t = 0
         while True:
-            print t
+            print(t)
             y = []
             h = 0
             corresponding_delta = []

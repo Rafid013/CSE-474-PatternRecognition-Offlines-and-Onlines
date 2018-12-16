@@ -24,7 +24,7 @@ class Perceptron:
         w = pd.Series(self.weight)
         t = 0
         while True:
-            print t
+            print(t)
             y = []
             corresponding_delta = []
             for i in range(0, num_of_samples):

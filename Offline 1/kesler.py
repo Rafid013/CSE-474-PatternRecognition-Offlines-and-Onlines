@@ -70,7 +70,7 @@ class Perceptron:
 
         t = 0
         while True:
-            print t
+            print(t)
             y = 0
             for i in range(0, len(x)):
                 temp = x[i].dot(w)
@@ -132,6 +132,6 @@ for l in range(0, df_test.shape[0]):
     else:
         false_res += 1
 
-print true_res, false_res
+print(true_res, false_res)
 acc = float(true_res)/df_test.shape[0]
-print acc
+print(acc)

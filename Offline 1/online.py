@@ -37,10 +37,9 @@ for i in range(0, dfls_test.shape[0]):
         else:
             fp += 1
 
-print tp, tn, fp, fn
+print(tp, tn, fp, fn)
 acc = float(tp + tn)/dfls_test.shape[0]
-print acc
-
+print(acc)
 
 results = []
 for s in range(0, dfls_test.shape[0]):
@@ -59,10 +58,9 @@ for i in range(0, dfls_test.shape[0]):
         else:
             fp += 1
 
-print tp, tn, fp, fn
+print(tp, tn, fp, fn)
 acc = float(tp + tn)/dfls_test.shape[0]
-print acc
-
+print(acc)
 
 dfnls = pd.read_csv('trainLinearlyNonSeparable.txt', delimiter='\s+', header=None, skiprows=1)
 
@@ -94,6 +92,6 @@ for i in range(0, dfnls_test.shape[0]):
         else:
             fp += 1
 
-print tp, tn, fp, fn
+print(tp, tn, fp, fn)
 acc = float(tp + tn)/dfnls_test.shape[0]
-print acc
+print(acc)

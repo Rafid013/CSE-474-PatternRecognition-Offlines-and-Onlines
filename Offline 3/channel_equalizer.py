@@ -59,10 +59,14 @@ class ChannelEqualizer:
         elif w_before == -1:
             d = self.prior_probas[w_after] * self.multivariate_normal(x, self.clusters_means[w_after],
                                                                       self.clusters_covariances[w_after])
+            if d == 0:
+                return math.inf
             return math.log(d, math.e)
         else:
             d = self.transition_probas[w_before][w_after]*self.multivariate_normal(x, self.clusters_means[w_after],
                                                                                    self.clusters_covariances[w_after])
+            if d == 0:
+                return math.inf
             return math.log(d, math.e)
 
     def D_max(self, wik, x, k, from_list, D):

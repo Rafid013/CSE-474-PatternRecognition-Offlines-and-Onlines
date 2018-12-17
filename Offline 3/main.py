@@ -19,6 +19,7 @@ while True:
 
 ce = ChannelEqualizer(coefficients, noise_mean, noise_variance)
 ce.train(I)
+file.close()
 
 file = open('test.txt', 'r')
 I = [0]
@@ -27,13 +28,19 @@ while True:
     if c == '':
         break
     I.append(int(c))
+file.close()
 
 y = ce.predict(I)
 
 total_accurate = 0.0
 total = len(I) - 1
+output_bit_string = ""
 for k in range(1, len(I)):
     if y[k] == I[k]:
         total_accurate += 1.0
+    output_bit_string = output_bit_string + str(y[k])
+file = open('out.txt', 'w')
+file.write(output_bit_string)
+file.close()
 
 print("Accuracy = " + str(total_accurate*100/total))

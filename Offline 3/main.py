@@ -30,13 +30,10 @@ while True:
 
 y = ce.predict(I)
 
-print(len(I))
-print(len(y))
-
 total_accurate = 0.0
 total = len(I) - 1
 for k in range(1, len(I)):
     if y[k] == I[k]:
         total_accurate += 1.0
 
-print(total_accurate/total)
+print("Accuracy = " + str(total_accurate*100/total))

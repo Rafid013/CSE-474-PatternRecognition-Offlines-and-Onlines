@@ -55,18 +55,18 @@ class ChannelEqualizer:
 
     def distance_proba(self, x, w_after, w_before):
         if self.transition_probas[w_before][w_after] == 0:
-            return math.inf
+            return -math.inf
         elif w_before == -1:
             d = self.prior_probas[w_after] * self.multivariate_normal(x, self.clusters_means[w_after],
                                                                       self.clusters_covariances[w_after])
             if d == 0:
-                return math.inf
+                return -math.inf
             return math.log(d, math.e)
         else:
             d = self.transition_probas[w_before][w_after]*self.multivariate_normal(x, self.clusters_means[w_after],
                                                                                    self.clusters_covariances[w_after])
             if d == 0:
-                return math.inf
+                return -math.inf
             return math.log(d, math.e)
 
     def D_max(self, wik, x, k, from_list, D):
@@ -79,9 +79,9 @@ class ChannelEqualizer:
         max_from = 0
         for wik_1 in range(1, self.num_of_clusters):
             if D[wik_1][k - 1] == -1:
-                value = self.D_max(0, x, k - 1, from_list, D) + self.distance_proba(x[k], wik, 0)
+                value = self.D_max(wik_1, x, k - 1, from_list, D) + self.distance_proba(x[k], wik, wik_1)
             else:
-                value = D[wik_1][k - 1] + self.distance_proba(x[k], wik, 0)
+                value = D[wik_1][k - 1] + self.distance_proba(x[k], wik, wik_1)
             if value > max_value:
                 max_value = value
                 max_from = wik_1
@@ -154,7 +154,6 @@ class ChannelEqualizer:
             X.append([x[k], x[k - 1]])
 
             for i in range(self.num_of_clusters):
-                print(k, i)
                 D[i][k] = self.D_max(i, X, k, from_list, D)
 
         D_max = D[0][len(I) - 1]
@@ -165,8 +164,8 @@ class ChannelEqualizer:
                 D_max = D_val
                 cluster_max = i
 
-        for k in range(len(I) - 1, 0):
-            if cluster_max in range(0, 4):
+        for k in range(len(I) - 1, 0, -1):
+            if cluster_max in range(4):
                 y[k] = 0
             else:
                 y[k] = 1

@@ -9,7 +9,7 @@ for i in range(1, 3):
 noise_mean = float(input("Noise Mean?\n"))
 noise_variance = float(input("Noise Variance?\n"))
 
-file = open('train.txt', 'r')
+file = open('Evaluation/train.txt', 'r')
 I = [0]
 while True:
     c = file.read(1)
@@ -21,7 +21,7 @@ ce = ChannelEqualizer(coefficients, noise_mean, noise_variance)
 ce.train(I)
 file.close()
 
-file = open('test.txt', 'r')
+file = open('Evaluation/test.txt', 'r')
 I = [0]
 while True:
     c = file.read(1)

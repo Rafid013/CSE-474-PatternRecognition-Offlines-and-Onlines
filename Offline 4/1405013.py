@@ -331,35 +331,46 @@ ex_counts = []
 log_counts = []
 hie_counts = []
 
-p_list = range(5, 51, 5)
+p_list = []
+p_ = 8
 
-for p_ in p_list:
+while True:
+    if p_ > 400:
+        break
     start = time.time()
-    ex_counts.append(exhaustive_search(grayImg, frame_array, fps, p_))
+    # ex_counts.append(exhaustive_search(grayImg, frame_array, fps, p_))
     end = time.time()
     print("Exhaustive search took " + str((end - start) / 60) + " minutes to run for p = " + str(p_))
 
     start = time.time()
     log_counts.append(logarithmic_search(grayImg, frame_array, fps, p_))
+    print(log_counts[0])
     end = time.time()
     print("2D Logarithmic search took " + str((end - start) / 60) + " minutes to run for p = " + str(p_))
 
     start = time.time()
-    hie_counts.append(hierarchical_search(grayImg, frame_array, fps, p_))
+    # hie_counts.append(hierarchical_search(grayImg, frame_array, fps, p_))
     end = time.time()
     print("Hierarchical search took " + str((end - start) / 60) + " minutes to run for p = " + str(p_))
 
-plt.plot(p_list, ex_counts, label='Exhaustive Search')
-plt.xlabel('p')
-plt.ylabel('Frame search count')
-plt.show()
+    p_list.append(p_)
+    p_ *= 2
+    break
 
-plt.plot(p_list, log_counts, label='2D Logarithmic Search')
-plt.xlabel('p')
-plt.ylabel('Frame search count')
-plt.show()
+# plt.plot(p_list, ex_counts, label='Exhaustive Search')
+# plt.xlabel('p')
+# plt.ylabel('Frame search count')
+# plt.show()
+# plt.savefig('exhaust_plot.png')
 
-plt.plot(p_list, hie_counts, label='Hierarchical Search')
-plt.xlabel('p')
-plt.ylabel('Frame search count')
-plt.show()
+# plt.plot(p_list, log_counts, label='2D Logarithmic Search')
+# plt.xlabel('p')
+# plt.ylabel('Frame search count')
+# plt.show()
+# plt.savefig('log_plot.png')
+
+# plt.plot(p_list, hie_counts, label='Hierarchical Search')
+# plt.xlabel('p')
+# plt.ylabel('Frame search count')
+# plt.show()
+# plt.savefig('hierarch_plot.png')
